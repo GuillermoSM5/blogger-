@@ -12,7 +12,7 @@ class UserCreate(BaseModel):
     )
     email: EmailStr = Field(
         max_length=50)
-    password: str = Field(
+    phrase: str = Field(
         min_length=8,
         max_length=30,
         pattern=r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$",
