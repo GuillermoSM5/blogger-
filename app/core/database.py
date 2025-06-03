@@ -7,7 +7,7 @@ from app.core.config import settings
 
 SQL_ALCHEMY_DATABASE_URL = settings.DATABASE_URL
 
-engine = create_engine(SQL_ALCHEMY_DATABASE_URL, echo=True)
+engine = create_engine(SQL_ALCHEMY_DATABASE_URL)
 
 
 # Crea una sesión de base de datos
