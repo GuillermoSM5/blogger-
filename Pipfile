@@ -10,7 +10,7 @@ pymysql = "*"
 pydantic = "*"
 python-dotenv = "*"
 pydantic-settings = "*"
-passlib = {extras = ["bcrypt"], version = "*"}
+bcrypt = "*"
 
 [dev-packages]
 
