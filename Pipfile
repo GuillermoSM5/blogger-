@@ -7,6 +7,10 @@ name = "pypi"
 fastapi = {extras = ["standard"], version = "*"}
 sqlalchemy = "*"
 pymysql = "*"
+pydantic = "*"
+python-dotenv = "*"
+pydantic-settings = "*"
+bcrypt = "*"
 
 [dev-packages]
 
