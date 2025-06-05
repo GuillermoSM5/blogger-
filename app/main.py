@@ -1,12 +1,15 @@
 from fastapi import FastAPI
 from api.v1.endpoints import users
 from app.core.database import Base, engine
-from models.user import User
+from app.core.exception_handlers import register_exception_handlers
 
 app = FastAPI()
 
 app.include_router(users.router)
 Base.metadata.create_all(bind=engine)
+
+# Registrando los hanlers de errroes
+register_exception_handlers(app)
 
 
 @app.get("/")
