@@ -11,6 +11,7 @@ pydantic = "*"
 python-dotenv = "*"
 pydantic-settings = "*"
 bcrypt = "*"
+cryptography = "*"
 
 [dev-packages]
 

@@ -1,8 +1,11 @@
 from typing import Optional
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from models.user import TipoUsuario
+import re
 # Esquema para la creacion de un usuario
+
+SPECIAL_CHARACTER_REGEX = re.compile(r"[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]")
 
 
 class UserCreate(BaseModel):
@@ -16,9 +19,37 @@ class UserCreate(BaseModel):
     phrase: str = Field(
         min_length=8,
         max_length=30,
-        # pattern=r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$",
         description="La contraseña debe tener entre 8 y 30 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial."
     )
+
+    @field_validator('phrase')  # ¡Cambiamos @validator por @field_validator!
+    @classmethod
+    def validate_password_strength(cls, value):
+        # 1. Validar la longitud primero
+        if not (8 <= len(value) <= 30):
+            raise ValueError(
+                'La contraseña debe tener entre 8 y 30 caracteres.')
+
+        # 2. Validar los requisitos de contenido con expresiones regulares
+        # Al menos una minúscula
+        if not re.search(r'[a-z]', value):
+            raise ValueError(
+                'La contraseña debe contener al menos una letra minúscula.')
+        # Al menos una mayúscula
+        if not re.search(r'[A-Z]', value):
+            raise ValueError(
+                'La contraseña debe contener al menos una letra mayúscula.')
+        # Al menos un número
+        if not re.search(r'\d', value):
+            raise ValueError('La contraseña debe contener al menos un número.')
+        # Al menos un carácter especial (ajusta esta lista según tus necesidades)
+        # He incluido los mismos caracteres especiales que en el ejemplo anterior
+        special_chars = r'[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]'
+        if not re.search(special_chars, value):
+            raise ValueError(
+                'La contraseña debe contener al menos un carácter especial.')
+
+        return value
 
 
 class User(BaseModel):
