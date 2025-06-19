@@ -17,3 +17,8 @@ def create_user(db: Session, user: UserCreate):
     # Actualiza la instancia con los datos de la DB (ej. id, created_at)
     db.refresh(db_user)
     return db_user
+
+
+def get_all_users(db: Session):
+    result = db.query(User).offset(0).limit(100).all()
+    return result

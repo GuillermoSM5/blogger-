@@ -1,6 +1,6 @@
 from typing import Optional
 from datetime import datetime
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field, field_validator, ConfigDict
 from models.user import TipoUsuario
 import re
 # Esquema para la creacion de un usuario
@@ -63,5 +63,19 @@ class User(BaseModel):
     email_verified: Optional[bool] = False
     active: Optional[bool] = True
 
-    class ConfigDict:
-        from_attributes = True  # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
+    # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
+    model_config = ConfigDict(from_attributes=True)
+
+
+class UserResponse(BaseModel):
+    id_user: Optional[int] = None
+    user_name: str = Field(max_length=50, min_length=5)
+    email: EmailStr
+    rol: TipoUsuario = Field("El rol del usuario en el sistema")
+    created_at: Optional[datetime] = None
+    update_at: Optional[datetime] = None
+    email_verified: Optional[bool] = False
+    active: Optional[bool] = True
+
+    # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
+    model_config = ConfigDict(from_attributes=True)

@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
+from typing import List
 from sqlalchemy.orm import Session
-from schemas.user import UserCreate
+from schemas.user import UserCreate, User, UserResponse
 from app.core.database import get_db
-from crud.user import create_user
+from crud.user import create_user, get_all_users
 from schemas.response_models import ApiResponse
 
 
@@ -13,6 +14,12 @@ router = APIRouter(
 
 
 @router.post('/', response_model=ApiResponse)
-def get_users(user: UserCreate, db: Session = Depends(get_db)):
+def create_users(user: UserCreate, db: Session = Depends(get_db)):
     create_user(db=db, user=user)
     return ApiResponse(message='El usuario a sido creado exitosamente')
+
+
+@router.get('/', response_model=ApiResponse[List[UserResponse]])
+def get_users(db: Session = Depends(get_db)):
+    users = get_all_users(db=db)
+    return ApiResponse(message='Obteniendo todo los usuarios', data=users)
