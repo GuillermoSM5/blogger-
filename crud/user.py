@@ -20,5 +20,6 @@ def create_user(db: Session, user: UserCreate):
 
 
 def get_all_users(db: Session):
+    # El offset y el limit estan ahi para el paginado
     result = db.query(User).offset(0).limit(100).all()
     return result

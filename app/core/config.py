@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     DEBUG_MODE: bool = False  # Valor por defecto si no se encuentra en .env
     API_VERSION: str = "v1"
+    SECRET_KEY: str
+    ALGORITHM: str
+    ACCES_TOKEN_EXPIRE_MINUTES: int = 5
 
 
 settings = Settings()
