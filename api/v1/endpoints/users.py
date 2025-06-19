@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends
 from typing import List
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from schemas.user import UserCreate, User, UserResponse
+from schemas.user import UserCreate, UserResponse
 from app.core.database import get_db
 from crud.user import create_user, get_all_users
 from schemas.response_models import ApiResponse
