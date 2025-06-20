@@ -3,7 +3,7 @@ from fastapi.security import HTTPBearer
 from fastapi import Request
 from crud.user import get_user_byemail
 from fastapi import Depends, HTTPException, status
-from app.core.security import verify_password
+from app.core.security import verify_password, decode_access_token
 
 
 def authenticate_user(email: str, phrase: str, db: Session):
@@ -16,9 +16,11 @@ def authenticate_user(email: str, phrase: str, db: Session):
 
 
 class BearerJWT(HTTPBearer):
-    async def __call__(self, request: Request, db: Session):
+    async def __call__(self, request: Request):
         auth = await super().__call__(request)
-        # email = decode_access_token(auth.credentials)
+        email = decode_access_token(auth.credentials)
+        print(email)
+        return email
         # if email is None:
         # raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
         # user = get_user_byemail(email=email, db=db)

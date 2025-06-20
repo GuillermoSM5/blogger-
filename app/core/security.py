@@ -1,5 +1,6 @@
 from typing import Optional
 from datetime import datetime, timedelta, timezone
+from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from bcrypt import hashpw, gensalt, checkpw
 import jwt
@@ -28,3 +29,24 @@ def create_acces_token(data: dict, expires_delta: Optional[timedelta] = None):
     encode_jwt = jwt.encode(to_encode, settings.SECRET_KEY,
                             algorithm=settings.ALGORITHM)
     return encode_jwt
+
+
+def decode_access_token(token: str):
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY,
+                             algorithms=[settings.SECRET_KEY])
+        email = payload.get('sub')
+        if email is None:
+            return None
+    except jwt.ExpiredSignatureError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Token expirado'
+        ) from exc
+    except jwt.InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Token invalido'
+        ) from exc
+
+    return email
