@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from schemas.user import UserCreate
 from models.user import User, TipoUsuario
 from app.core.security import get_password_hash
+from app.core.database import SessionLocal
 
 
 def create_user(db: Session, user: UserCreate):
@@ -25,6 +26,10 @@ def get_all_users(db: Session):
     return result
 
 
-def get_user_byemail(db: Session, email: str):
+def get_user_byemail(email: str):
+    db = SessionLocal()
     usuario = db.query(User).filter(User.email == email).all()
-    return usuario
+    db.close()
+    if not usuario:
+        return None
+    return usuario[0]
