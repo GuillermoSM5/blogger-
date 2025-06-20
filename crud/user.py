@@ -23,3 +23,8 @@ def get_all_users(db: Session):
     # El offset y el limit estan ahi para el paginado
     result = db.query(User).offset(0).limit(100).all()
     return result
+
+
+def get_user_byemail(db: Session, email: str):
+    usuario = db.query(User).filter(User.email == email).all()
+    return usuario
