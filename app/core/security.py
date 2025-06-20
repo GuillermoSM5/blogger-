@@ -34,8 +34,8 @@ def create_acces_token(data: dict, expires_delta: Optional[timedelta] = None):
 def decode_access_token(token: str):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY,
-                             algorithms=[settings.SECRET_KEY])
-        email = payload.get('sub')
+                             algorithms=[settings.ALGORITHM])
+        email = payload.get('email')
         if email is None:
             return None
     except jwt.ExpiredSignatureError as exc:
@@ -43,10 +43,10 @@ def decode_access_token(token: str):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Token expirado'
         ) from exc
-    except jwt.InvalidTokenError:
+    except jwt.InvalidTokenError as exc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail='Token invalido'
+            detail='Token invalidooooo'
         ) from exc
 
     return email
