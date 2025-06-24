@@ -6,7 +6,7 @@ from models.user import TipoUsuario
 
 
 class BearerJWT(HTTPBearer):
-    def __init__(self, role: list[TipoUsuario] = [TipoUsuario.LECTOR]):
+    def __init__(self, role: list[TipoUsuario] = [TipoUsuario.LECTOR, TipoUsuario.ESCRITOR, TipoUsuario.ADMINISTRADOR]):
         self.role = role
 
     async def __call__(self, request: Request):
