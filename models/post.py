@@ -5,7 +5,7 @@ from app.core.database import Base
 
 
 class Post(Base):
-    __tablename_ = "posts"
+    __tablename__ = "posts"
 
     id_post = Column(Integer, primary_key=True, autoincrement=True, index=True)
     title = Column(String(255), nullable=False, index=True)

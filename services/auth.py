@@ -6,7 +6,13 @@ from models.user import TipoUsuario
 
 
 class BearerJWT(HTTPBearer):
-    def __init__(self, role: list[TipoUsuario] = [TipoUsuario.LECTOR, TipoUsuario.ESCRITOR, TipoUsuario.ADMINISTRADOR]):
+    # def __init__(self, role: list[TipoUsuario] = [TipoUsuario.LECTOR, TipoUsuario.ESCRITOR, TipoUsuario.ADMINISTRADOR], model_data=None):
+    #     self.role = role
+    #     self.model = model_data
+
+    def __init__(self, role: list[TipoUsuario] = [TipoUsuario.LECTOR, TipoUsuario.ESCRITOR, TipoUsuario.ADMINISTRADOR], bearerFormat=None, scheme_name=None, description=None, auto_error=True):
+        super().__init__(bearerFormat=bearerFormat, scheme_name=scheme_name,
+                         description=description, auto_error=auto_error)
         self.role = role
 
     async def __call__(self, request: Request):
