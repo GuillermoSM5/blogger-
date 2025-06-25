@@ -11,6 +11,8 @@ pydantic = "*"
 python-dotenv = "*"
 pydantic-settings = "*"
 bcrypt = "*"
+cryptography = "*"
+pyjwt = "*"
 
 [dev-packages]
 

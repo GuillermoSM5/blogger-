@@ -3,6 +3,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.sql.functions import func
 from sqlalchemy import Enum
 from app.core.database import Base
+from sqlalchemy.orm import relationship
 
 
 class TipoUsuario(PyEnum):
@@ -25,3 +26,5 @@ class User(Base):
     update_at = Column(DateTime, default=func.now(), onupdate=func.now())
     email_verified = Column(Boolean, default=False)
     active = Column(Boolean, default=True)
+
+    posts = relationship("Post", back_populates="autor")
