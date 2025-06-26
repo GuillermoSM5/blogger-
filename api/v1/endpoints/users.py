@@ -15,13 +15,13 @@ router = APIRouter(
 )
 
 
-@router.post('/', response_model=ApiResponse)
+@router.post('', response_model=ApiResponse)
 def create_users(user: UserCreate, db: Session = Depends(get_db)):
     create_user(db=db, user=user)
     return ApiResponse(message='El usuario a sido creado exitosamente')
 
 
-@router.get('/', response_model=ApiResponse[List[UserResponse]], dependencies=[Depends(BearerJWT([TipoUsuario.ADMINISTRADOR]))])
+@router.get('', response_model=ApiResponse[List[UserResponse]], dependencies=[Depends(BearerJWT([TipoUsuario.ADMINISTRADOR]))])
 def get_users(db: Session = Depends(get_db)):
     users = get_all_users(db=db)
     return ApiResponse(message='Obteniendo todo los usuarios', data=users)
