@@ -19,3 +19,9 @@ def get_post_byid(post_id: int,  db: Session):
     if not post_db:
         return None
     return post_db[0]
+
+
+def get_all_post_db(db: Session):
+    result = db.query(Post).options(joinedload(
+        Post.autor)).offset(0).limit(100).all()
+    return result

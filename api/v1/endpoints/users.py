@@ -25,3 +25,6 @@ def create_users(user: UserCreate, db: Session = Depends(get_db)):
 def get_users(db: Session = Depends(get_db)):
     users = get_all_users(db=db)
     return ApiResponse(message='Obteniendo todo los usuarios', data=users)
+
+# @router.get('',response_model=ApiResponse[UserResponse])
+# def get_post_by_id():
