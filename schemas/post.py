@@ -20,6 +20,7 @@ class Post(BaseModel):
     image_url: str = None
     id_autor: int = None,
     published: bool = False
+    minutes_to_read: int = None
     created_at: Optional[datetime] = None
     update_at: Optional[datetime] = None
 
@@ -33,6 +34,7 @@ class PostResponse(BaseModel):
     image_url: str = None
     id_autor: int = None,
     published: bool = False
+    minutes_to_read: int = None
     created_at: Optional[datetime] = None
     update_at: Optional[datetime] = None
     autor: UserResponse

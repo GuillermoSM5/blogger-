@@ -13,6 +13,7 @@ pydantic-settings = "*"
 bcrypt = "*"
 cryptography = "*"
 pyjwt = "*"
+commitizen = "*"
 
 [dev-packages]
 
