@@ -13,6 +13,7 @@ class Post(Base):
     image_url = Column(String(255), nullable=True)
     id_autor = Column(Integer, ForeignKey("users.id_user"), nullable=False)
     published = Column(Boolean, default=False)
+    minutes_to_read = Column(Integer)
     created_at = Column(DateTime, default=func.now())
     update_at = Column(DateTime, default=func.now(), onupdate=func.now())
 

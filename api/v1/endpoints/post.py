@@ -26,4 +26,4 @@ def get_postbyid(post_id: str, db: Session = Depends(get_db)):
 @router.get('', response_model=ApiResponse[list[PostResponse]])
 def get_all_post(db: Session = Depends(get_db)):
     post = get_all_post_db(db=db)
-    return ApiResponse(message='Obteniendo todo los Usuarios', data=post)
+    return ApiResponse(message='Obteniendo todo los Post', data=post)
