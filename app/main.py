@@ -3,6 +3,7 @@ from api.v1.endpoints import users, login, post
 from app.core.database import Base, engine
 from app.core.exception_handlers import register_exception_handlers
 
+
 app = FastAPI()
 
 app.include_router(users.router)
