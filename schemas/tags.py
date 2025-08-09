@@ -8,4 +8,4 @@ class TagCreate(BaseModel):
 
 class Tag(BaseModel):
     name: str = None
-    id_tag: str = None
+    id_tag: int = None
