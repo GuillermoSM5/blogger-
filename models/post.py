@@ -14,6 +14,7 @@ class Post(Base):
     id_autor = Column(Integer, ForeignKey("users.id_user"), nullable=False)
     published = Column(Boolean, default=False)
     minutes_to_read = Column(Integer)
+    slug = Column(String(500))
     created_at = Column(DateTime, default=func.now())
     update_at = Column(DateTime, default=func.now(), onupdate=func.now())
 

@@ -1,12 +1,15 @@
 from sqlalchemy.orm import Session, joinedload
+from services.post_service import get_reading_time_minutes, get_slug
 from schemas.post import PostCreate
 from models.post import Post
 
 
 def create_postdb(db: Session, post: PostCreate):
     db_post = Post(
-        **post.model_dump()
+        **post.model_dump(),
     )
+    db_post.minutes_to_read = get_reading_time_minutes(db_post.content)
+    db_post.slug = get_slug(db_post.title)
     db.add(db_post)
     db.commit()
     db.refresh(db_post)
