@@ -1,5 +1,14 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Table, ForeignKey
 from app.core.database import Base
+
+# Tabla de unión para la relación muchos a muchos
+# Se define como un objeto Table, no como una clase de modelo
+post_tag = Table(
+    'post_tag',
+    Base.metadata,
+    Column('post_id', Integer, ForeignKey('posts.id_post'), primary_key=True),
+    Column('tag_id', Integer, ForeignKey('tags.id_tag'), primary_key=True)
+)
 
 
 class Tags(Base):
