@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from models.Tags import Tags
-from schemas.tags import TagCreate
+from schemas.tags import TagCreate, Tag
 
 
 def get_all_tags_db(db: Session):
@@ -16,3 +16,12 @@ def create_tag_db(tag: TagCreate, db: Session):
     db.commit()
     db.refresh(db_tag)
     return db_tag
+
+
+def edit_tag_db(tag: Tag, db: Session):
+    tag_db = db.query(Tags).filter(Tags.id_tag == tag.id_tag).first()
+    if tag_db:
+        tag_db.name = tag.name
+        db.commit()
+        db.refresh(tag_db)
+    return ''
