@@ -2,14 +2,25 @@ from sqlalchemy.orm import Session, joinedload
 from services.post_service import get_reading_time_minutes, get_slug
 from schemas.post import PostCreate
 from models.post import Post
+from models.Tags import Tags
 
 
 def create_postdb(db: Session, post: PostCreate):
+    tag = db.query(Tags).filter(Tags.name == post.tags[0]).all()
+    print(tag[0].id_tag)
+    # Ejemplo de como desestructurar un objeto en python
+    # db_post = Post(
+    #     **post.model_dump(),
+    # )
     db_post = Post(
-        **post.model_dump(),
+        title=post.title,
+        content=post.content,
+        image_url='',
+        id_autor=post.id_autor,
+        tags=tag,
+        minutes_to_read=get_reading_time_minutes(post.content),
+        slug=get_slug(post.title)
     )
-    db_post.minutes_to_read = get_reading_time_minutes(db_post.content)
-    db_post.slug = get_slug(db_post.title)
     db.add(db_post)
     db.commit()
     db.refresh(db_post)
