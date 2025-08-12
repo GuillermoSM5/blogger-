@@ -11,6 +11,7 @@ class PostCreate(BaseModel):
     content: str = Field(min_length=5, max_length=1500,
                          description="Contenido del post")
     id_autor: int = Field(description="Id del autor del post")
+    image_url: Optional[str] = Field(description="url de imagen para el post")
     tags: List[str] = []
 
 

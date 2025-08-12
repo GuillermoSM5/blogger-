@@ -1,8 +1,16 @@
 from fastapi import FastAPI
+import cloudinary
 from api.v1.endpoints import users, login, post, tags
 from app.core.database import Base, engine
 from app.core.exception_handlers import register_exception_handlers
+from app.core.config import settings
 
+
+cloudinary.config(
+    cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+    api_key=settings.CLOUDINARY_API_KEY,
+    api_secret=settings.CLOUDINARY_API_SECRET,
+)
 
 app = FastAPI()
 

@@ -15,7 +15,7 @@ def create_postdb(db: Session, post: PostCreate):
     db_post = Post(
         title=post.title,
         content=post.content,
-        image_url='',
+        image_url=post.image_url,
         id_autor=post.id_autor,
         tags=tag,
         minutes_to_read=get_reading_time_minutes(post.content),
