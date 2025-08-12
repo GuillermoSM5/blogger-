@@ -26,5 +26,6 @@ class User(Base):
     update_at = Column(DateTime, default=func.now(), onupdate=func.now())
     email_verified = Column(Boolean, default=False)
     active = Column(Boolean, default=True)
+    ocupation = Column(String(50), nullable=True)
 
     posts = relationship("Post", back_populates="autor")

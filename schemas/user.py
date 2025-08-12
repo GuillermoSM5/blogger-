@@ -62,7 +62,7 @@ class User(BaseModel):
     update_at: Optional[datetime] = None
     email_verified: Optional[bool] = False
     active: Optional[bool] = True
-
+    ocupation: str = ''
     # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
     model_config = ConfigDict(from_attributes=True)
 
@@ -76,7 +76,7 @@ class UserResponse(BaseModel):
     update_at: Optional[datetime] = None
     email_verified: Optional[bool] = False
     active: Optional[bool] = True
-
+    ocupation: str = ''
     # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
     model_config = ConfigDict(from_attributes=True)
 
@@ -86,6 +86,6 @@ class UserResponseInPost(BaseModel):
     user_name: str = Field(max_length=50, min_length=5)
     email: EmailStr
     active: Optional[bool] = True
-
+    ocupation: str = ''
     # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
     model_config = ConfigDict(from_attributes=True)
