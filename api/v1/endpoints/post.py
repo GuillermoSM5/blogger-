@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from schemas.response_models import ApiResponse
@@ -13,6 +14,8 @@ router = APIRouter(
 
 @router.post('', response_model=ApiResponse)
 def create_post(post: PostCreate, db: Session = Depends(get_db)):
+    if len(post.tags) > 5:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=ApiResponse(message="Un post no puede tener mas de 5 tags").dict())
     post = create_postdb(post=post, db=db)
     return ApiResponse(message='El Post ah sido creado exitosamente')
 
