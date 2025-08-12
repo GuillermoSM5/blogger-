@@ -7,7 +7,7 @@ from models.Tags import Tags
 
 def create_postdb(db: Session, post: PostCreate):
     tag = db.query(Tags).filter(Tags.name.in_(post.tags)).all()
-    print(tag[0].id_tag)
+
     # Ejemplo de como desestructurar un objeto en python
     # db_post = Post(
     #     **post.model_dump(),

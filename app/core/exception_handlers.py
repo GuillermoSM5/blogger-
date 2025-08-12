@@ -1,8 +1,11 @@
 import re
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+from pydantic import ValidationError
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from schemas.response_models import ErrorResponse
+
 
 # Esto es útil si tus nombres de columnas de DB no son directamente amigables para el usuario
 DB_COLUMN_TO_FRIENDLY_NAME = {
@@ -46,6 +49,36 @@ async def sqlalchemy_error_handler(request: Request, exc: SQLAlchemyError):
     )
 
 
+async def validation_exception_handler(request: Request, exc: ValidationError):
+    print(f"General ValidationError caught: {exc.errors()}")
+    errores = []
+    for err in exc.errors():
+        campo = ".".join(str(loc) for loc in err["loc"])
+        print(f"field: {err}")
+        errores.append(f"{campo.capitalize()} : {err['msg']}")
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content=errores
+    )
+
+
+async def request_validation_exception_handler(request: Request, exc: RequestValidationError):
+    print(f"General ValidationError caught: {exc.errors()}")
+    errores = []
+    for err in exc.errors():
+        campo = ".".join(str(loc) for loc in err["loc"][1:])
+        print(f"field: {err}")
+        errores.append(f"{campo.capitalize()} : {err['msg']}")
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content=errores
+    )
+
+
 def register_exception_handlers(app):
     app.add_exception_handler(IntegrityError, integrity_error_handler)
     app.add_exception_handler(SQLAlchemyError, sqlalchemy_error_handler)
+    app.add_exception_handler(ValidationError,
+                              validation_exception_handler)
+    app.add_exception_handler(RequestValidationError,
+                              request_validation_exception_handler)
