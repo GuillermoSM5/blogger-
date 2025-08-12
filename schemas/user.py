@@ -79,3 +79,13 @@ class UserResponse(BaseModel):
 
     # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
     model_config = ConfigDict(from_attributes=True)
+
+
+class UserResponseInPost(BaseModel):
+    id_user: Optional[int] = None
+    user_name: str = Field(max_length=50, min_length=5)
+    email: EmailStr
+    active: Optional[bool] = True
+
+    # Permite que Pydantic lea los atributos de un objeto SQLAlchemy
+    model_config = ConfigDict(from_attributes=True)

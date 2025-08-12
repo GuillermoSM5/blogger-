@@ -39,3 +39,17 @@ def get_all_post_db(db: Session):
     result = db.query(Post).options(joinedload(
         Post.autor)).offset(0).limit(100).all()
     return result
+
+
+def get_postby_tag(tag_id: int, db: Session):
+    tag = db.query(Tags).filter(Tags.id_tag == tag_id).first()
+    if not tag:
+        return []
+
+    posts = db.query(Post).options(joinedload(Post.autor)).filter(
+        Post.tags.any(Tags.name == tag.name)).all()
+
+    if not posts:
+        return []
+
+    return posts

@@ -1,7 +1,7 @@
 from typing import Optional, List
 from datetime import datetime
 from pydantic import BaseModel, Field, ConfigDict
-from schemas.user import UserResponse
+from schemas.user import UserResponseInPost
 from schemas.tags import Tag
 
 
@@ -42,7 +42,7 @@ class PostResponse(BaseModel):
     slug: str = None
     created_at: Optional[datetime] = None
     update_at: Optional[datetime] = None
-    autor: UserResponse
+    autor: UserResponseInPost
     tags: List[Tag] = []
 
     model_config = ConfigDict(from_attributes=True)
