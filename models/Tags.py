@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Table, ForeignKey
+from sqlalchemy.orm import relationship
 from app.core.database import Base
 
 # Tabla de unión para la relación muchos a muchos
@@ -17,3 +18,9 @@ class Tags(Base):
     id_tag = Column(Integer, primary_key=True,
                     autoincrement=True, index=True)
     name = Column(String(50), nullable=False, unique=True)
+
+    posts = relationship(
+        "Post",
+        secondary=post_tag,
+        back_populates="tags"
+    )

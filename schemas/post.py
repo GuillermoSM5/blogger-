@@ -1,7 +1,8 @@
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 from pydantic import BaseModel, Field, ConfigDict
 from schemas.user import UserResponse
+from schemas.tags import Tag
 
 
 class PostCreate(BaseModel):
@@ -11,6 +12,7 @@ class PostCreate(BaseModel):
                          description="Contenido del post")
     image_url: Optional[str] = Field(description="url de imagen para el post")
     id_autor: int = Field(description="Id del autor del post")
+    tags: List[str] = []
 
 
 class Post(BaseModel):
@@ -40,5 +42,6 @@ class PostResponse(BaseModel):
     created_at: Optional[datetime] = None
     update_at: Optional[datetime] = None
     autor: UserResponse
+    tags: List[Tag] = []
 
     model_config = ConfigDict(from_attributes=True)
