@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.sql.functions import func
 from sqlalchemy.orm import relationship
 from app.core.database import Base
+from models.Tags import post_tag
 
 
 class Post(Base):
@@ -18,4 +19,5 @@ class Post(Base):
     created_at = Column(DateTime, default=func.now())
     update_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
+    tags = relationship("Tags", secondary=post_tag, back_populates="posts")
     autor = relationship("User", back_populates="posts")

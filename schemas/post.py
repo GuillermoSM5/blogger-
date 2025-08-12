@@ -26,6 +26,7 @@ class Post(BaseModel):
     slug: str = None
     created_at: Optional[datetime] = None
     update_at: Optional[datetime] = None
+    tags: List[Tag] = []
 
     model_config = ConfigDict(from_attributes=True)
 
